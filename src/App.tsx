@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { UploadForm } from "./pages/landing/UploadForm";
+import { FileSelect } from "./pages/FileSelect/FileSelect";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path";
+import { PageSelect } from "./pages/PageSelect/PageSelect";
 
 export const App = () => {
   setBasePath(
@@ -10,7 +11,8 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<UploadForm />} />
+      <Route path="/" element={<FileSelect />} />
+      <Route path="/select-pages" element={<PageSelect />} />
     </Routes>
   );
 };
