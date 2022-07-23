@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Landing } from "./pages/landing/Landing";
+import { UploadForm } from "./pages/landing/UploadForm";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path";
 
@@ -10,7 +10,7 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
+      <Route path="/" element={<UploadForm />} />
     </Routes>
   );
 };
