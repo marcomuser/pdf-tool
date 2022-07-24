@@ -8,7 +8,6 @@ import {
 import type { Dispatch, FormEvent } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { extractPages } from "../../utils/extractPages";
 
 interface TState {
   file: File;
@@ -36,6 +35,7 @@ export const PageSelect = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      const { extractPages } = await import("../../utils/extractPages");
       const pdfFile = await extractPages(file, fromValue, toValue);
       const blobUrl = URL.createObjectURL(pdfFile);
       window.location.href = blobUrl;
