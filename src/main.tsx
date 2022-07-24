@@ -6,7 +6,7 @@ import { MainLayout } from "./layouts/MainLayout";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/pdf-tool">
       <MainLayout>
         <App />
       </MainLayout>
