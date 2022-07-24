@@ -4,7 +4,8 @@ import {
   SlCard,
   SlIcon,
 } from "@shoelace-style/shoelace/dist/react";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const FileSelect = () => {
