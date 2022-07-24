@@ -7,6 +7,7 @@ import {
 import type { Dispatch, FormEvent } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { extractPages } from "../../utils/extractPages";
 
 interface TState {
   file: File;
@@ -32,7 +33,7 @@ export const PageSelect = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(fromValue, toValue);
+    extractPages(file, fromValue, toValue);
   };
 
   return (
