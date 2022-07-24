@@ -1,5 +1,5 @@
-import { SlButton, SlCard } from "@shoelace-style/shoelace/dist/react";
-import { useLocation } from "react-router-dom";
+import { SlButton, SlCard, SlInput } from "@shoelace-style/shoelace/dist/react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface TState {
   file: File;
@@ -7,18 +7,36 @@ interface TState {
 
 export const PageSelect = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { file } = location.state as TState;
-  console.log(file);
 
   return (
     <section>
       <form>
         <SlCard>
           <h1 slot="header">Select the pages to extract</h1>
-          <input type="text" />
-          <SlButton slot="footer" variant="primary" type="submit">
-            Download your PDF
-          </SlButton>
+          <h2>{file.name}</h2>
+          <SlInput
+            type="number"
+            inputmode="numeric"
+            label="From page"
+          ></SlInput>
+          <SlInput
+            type="number"
+            inputmode="numeric"
+            label="To page (including)"
+          ></SlInput>
+          <div
+            slot="footer"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <SlButton variant="default" onClick={() => navigate("/")}>
+              Back
+            </SlButton>
+            <SlButton variant="primary" type="submit">
+              Get PDF
+            </SlButton>
+          </div>
         </SlCard>
       </form>
     </section>

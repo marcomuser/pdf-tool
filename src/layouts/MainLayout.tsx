@@ -5,7 +5,7 @@ interface TMainLayoutProps {
 }
 
 export const MainLayout = ({ children }: TMainLayoutProps) => (
-  <main style={{ height: "100vh", display: "grid", placeItems: "center" }}>
+  <main style={{ height: "95vh", display: "grid", placeItems: "center" }}>
     {children}
   </main>
 );

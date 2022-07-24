@@ -36,9 +36,14 @@ export const FileSelect = () => {
         <SlCard>
           <h1 slot="header">Select your PDF</h1>
           <input type="file" accept=".pdf" onChange={handleChange} />
-          <SlButton slot="footer" variant="primary" type="submit">
-            Let&apos;s go!
-          </SlButton>
+          <div
+            slot="footer"
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <SlButton variant="primary" type="submit">
+              Next
+            </SlButton>
+          </div>
         </SlCard>
       </form>
       <SlAlert open={Boolean(errorMessage)} variant="danger">
