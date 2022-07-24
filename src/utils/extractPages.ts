@@ -5,38 +5,45 @@ export const extractPages = async (
   from: string,
   to: string
 ): Promise<File> => {
-  generateErrorMessages(Number(from), Number(to));
-
   // Serialize PDF Document
   const pdfBytes = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
-  removePages(pdfDoc, Number(from), Number(to));
+  generateErrorMessages(pdfDoc, Number(from), Number(to));
+
+  const extractedPdfDoc = await createPdf(pdfDoc, Number(from), Number(to));
 
   // Return PDF File Blob
-  const newPdfBytes = await pdfDoc.save();
+  const newPdfBytes = await extractedPdfDoc.save();
   return new File([newPdfBytes], `${file.name}_extract`, {
     type: "application/pdf",
   });
 };
 
-const generateErrorMessages = (from: number, to: number) => {
+const generateErrorMessages = (
+  pdfDoc: PDFDocument,
+  from: number,
+  to: number
+) => {
   if (from > to) {
     throw new Error("To page number can't be smaller than From");
   } else if (from <= 0 || to <= 0) {
     throw new Error("Page numbers should start at 1");
+  } else if (to > pdfDoc.getPageCount()) {
+    throw new Error("To page number is greater than PDF page count");
   }
 };
 
-const removePages = (pdfDoc: PDFDocument, from: number, to: number) => {
-  const pages = pdfDoc.getPages();
-  const fromIndex = from - 1;
-  const toIndex = to - 1;
-  pages.forEach((_, i) => {
-    if (i < fromIndex) {
-      pdfDoc.removePage(i);
-    } else if (i > toIndex) {
-      pdfDoc.removePage(i);
-    }
-  });
+const createPdf = async (pdfDoc: PDFDocument, from: number, to: number) => {
+  const newPdfDoc = await PDFDocument.create();
+  const pageIndexesToCopy = [...Array(to - (from - 1)).keys()].map(
+    (el) => el + (from - 1)
+  );
+  const copiedPages = await newPdfDoc.copyPages(pdfDoc, pageIndexesToCopy);
+
+  for (const page of copiedPages) {
+    newPdfDoc.addPage(page);
+  }
+
+  return newPdfDoc;
 };
