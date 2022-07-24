@@ -1,4 +1,5 @@
 import {
+  SlAlert,
   SlButton,
   SlCard,
   SlIcon,
@@ -20,6 +21,7 @@ export const PageSelect = () => {
 
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (
     e: Event,
@@ -33,9 +35,18 @@ export const PageSelect = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const pdfFile = await extractPages(file, fromValue, toValue);
-    const blobUrl = URL.createObjectURL(pdfFile);
-    window.location.href = blobUrl;
+    try {
+      const pdfFile = await extractPages(file, fromValue, toValue);
+      const blobUrl = URL.createObjectURL(pdfFile);
+      window.location.href = blobUrl;
+    } catch (err) {
+      const { message } = err as Error;
+      if (message) {
+        setErrorMessage(message);
+      } else {
+        console.error(err);
+      }
+    }
   };
 
   return (
@@ -83,6 +94,10 @@ export const PageSelect = () => {
           </div>
         </SlCard>
       </form>
+      <SlAlert open={Boolean(errorMessage)} variant="danger">
+        <SlIcon slot="icon" name="info-circle" />
+        {errorMessage}
+      </SlAlert>
     </section>
   );
 };

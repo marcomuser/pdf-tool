@@ -5,11 +5,13 @@ export const extractPages = async (
   from: string,
   to: string
 ): Promise<File> => {
+  generateErrorMessages(Number(from), Number(to));
+
   // Serialize PDF Document
   const pdfBytes = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
-  removePages(pdfDoc, from, to);
+  removePages(pdfDoc, Number(from), Number(to));
 
   // Return PDF File Blob
   const newPdfBytes = await pdfDoc.save();
@@ -18,10 +20,18 @@ export const extractPages = async (
   });
 };
 
-const removePages = (pdfDoc: PDFDocument, from: string, to: string) => {
+const generateErrorMessages = (from: number, to: number) => {
+  if (from > to) {
+    throw new Error("To page number can't be smaller than From");
+  } else if (from <= 0 || to <= 0) {
+    throw new Error("Page numbers should start at 1");
+  }
+};
+
+const removePages = (pdfDoc: PDFDocument, from: number, to: number) => {
   const pages = pdfDoc.getPages();
-  const fromIndex = Number(from) - 1;
-  const toIndex = Number(to) - 1;
+  const fromIndex = from - 1;
+  const toIndex = to - 1;
   pages.forEach((_, i) => {
     if (i < fromIndex) {
       pdfDoc.removePage(i);
