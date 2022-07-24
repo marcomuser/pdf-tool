@@ -31,9 +31,11 @@ export const PageSelect = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    extractPages(file, fromValue, toValue);
+    const pdfFile = await extractPages(file, fromValue, toValue);
+    const blobUrl = URL.createObjectURL(pdfFile);
+    window.location.href = blobUrl;
   };
 
   return (
