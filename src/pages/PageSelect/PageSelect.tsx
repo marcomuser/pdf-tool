@@ -1,10 +1,3 @@
-import {
-  SlAlert,
-  SlButton,
-  SlCard,
-  SlIcon,
-  SlInput,
-} from "@shoelace-style/shoelace/dist/react";
 import type { Dispatch, FormEvent } from "react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,10 +16,11 @@ export const PageSelect = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (
-    e: Event,
+    e: React.ChangeEvent<HTMLInputElement>,
     set: Dispatch<React.SetStateAction<string>>
   ) => {
-    const { value } = e.target as EventTarget & HTMLInputElement;
+    e.preventDefault();
+    const { value } = e.target;
     if (value) {
       set(value);
     }
@@ -52,52 +46,39 @@ export const PageSelect = () => {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <SlCard>
+        <div>
           <h1 slot="header">Select the pages to extract</h1>
           <h2>{file.name}</h2>
-          <SlInput
-            onSlInput={(e) => {
+          <input
+            onChange={(e) => {
               handleChange(e, setFromValue);
             }}
             value={fromValue}
             type="number"
-            inputmode="numeric"
-            label="From"
+            inputMode="numeric"
             placeholder="from page..."
             required
-          >
-            <SlIcon slot="prefix" name="123"></SlIcon>
-          </SlInput>
-          <SlInput
-            onSlInput={(e) => {
+          ></input>
+          <input
+            onChange={(e) => {
               handleChange(e, setToValue);
             }}
             value={toValue}
             type="number"
-            inputmode="numeric"
-            label="To (including)"
+            inputMode="numeric"
             placeholder="to page..."
             required
-          >
-            <SlIcon slot="prefix" name="123"></SlIcon>
-          </SlInput>
+          ></input>
           <div
             slot="footer"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <SlButton variant="default" onClick={() => navigate("/")}>
-              Back
-            </SlButton>
-            <SlButton variant="primary" type="submit">
-              Get PDF
-            </SlButton>
+            <button onClick={() => navigate("/")}>Back</button>
+            <button>Get PDF</button>
           </div>
-        </SlCard>
+        </div>
       </form>
-      <SlAlert open={Boolean(errorMessage)} variant="danger">
-        <SlIcon slot="icon" name="info-circle" />
-        {errorMessage}
-      </SlAlert>
+      {errorMessage ? <p>{errorMessage}</p> : null}
     </section>
   );
 };
