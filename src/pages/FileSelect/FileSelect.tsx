@@ -1,12 +1,7 @@
-import {
-  SlAlert,
-  SlButton,
-  SlCard,
-  SlIcon,
-} from "@shoelace-style/shoelace/dist/react";
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { css } from "@emotion/css";
 
 export const FileSelect = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -34,23 +29,20 @@ export const FileSelect = () => {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <SlCard>
-          <h1 slot="header">Select your PDF</h1>
+        <div>
+          <h1>Select your PDF</h1>
           <input type="file" accept=".pdf" onChange={handleChange} />
-          <div
-            slot="footer"
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <SlButton variant="primary" type="submit">
-              Next
-            </SlButton>
+          <div className={footerStyles}>
+            <button type="submit">Next</button>
           </div>
-        </SlCard>
+        </div>
       </form>
-      <SlAlert open={Boolean(errorMessage)} variant="danger">
-        <SlIcon slot="icon" name="info-circle" />
-        {errorMessage}
-      </SlAlert>
+      {errorMessage ? <p>{errorMessage}</p> : null}
     </section>
   );
 };
+
+const footerStyles = css`
+  display: flex;
+  justify-content: flex-end;
+`;

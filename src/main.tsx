@@ -2,14 +2,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
-import { MainLayout } from "./layouts/MainLayout";
+import { PageLayout } from "./layouts/PageLayout";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <BrowserRouter basename="/pdf-tool">
-      <MainLayout>
+      <PageLayout>
         <App />
-      </MainLayout>
+      </PageLayout>
     </BrowserRouter>
   </StrictMode>
 );
