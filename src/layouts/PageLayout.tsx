@@ -6,10 +6,10 @@ interface TPageLayoutProps {
 }
 
 export const PageLayout = ({ children }: TPageLayoutProps) => (
-  <main className={mainStyle}>{children}</main>
+  <main className={mainStyles}>{children}</main>
 );
 
-const mainStyle = css`
+const mainStyles = css`
   height: 95vh;
   display: grid;
   place-items: center;

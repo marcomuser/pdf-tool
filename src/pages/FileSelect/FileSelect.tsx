@@ -32,7 +32,7 @@ export const FileSelect = () => {
         <div>
           <h1>Select your PDF</h1>
           <input type="file" accept=".pdf" onChange={handleChange} />
-          <div className={FooterStyles}>
+          <div className={footerStyles}>
             <button type="submit">Next</button>
           </div>
         </div>
@@ -42,7 +42,7 @@ export const FileSelect = () => {
   );
 };
 
-const FooterStyles = css`
+const footerStyles = css`
   display: flex;
   justify-content: flex-end;
 `;
